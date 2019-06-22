@@ -26,14 +26,14 @@ node {
    }
    
    stage('deploy-dev'){
-       def tomcatDevIp = '172.31.6.164'
+       def tomcatDevIp = '172.31.6.229'
 	   def tomcatHome = '/opt/tomcat8/'
 	   def webApps = tomcatHome+'webapps/'
 	   def tomcatStart = "${tomcatHome}bin/startup.sh"
 	   def tomcatStop = "${tomcatHome}bin/shutdown.sh"
 	   
 	   sshagent (credentials: ['tomcat-ssh']) {
-	      sh "scp -o StrictHostKeyChecking=no target/myweb*.war ec2-user@${tomcatDevIp}:${webApps}myweb.war"
+	      sh "scp -o StrictHostKeyChecking=no target/myapp*.war ec2-user@${tomcatDevIp}:${webApps}myapp*.war"
           sh "ssh ec2-user@${tomcatDevIp} ${tomcatStop}"
 		  sh "ssh ec2-user@${tomcatDevIp} ${tomcatStart}"
        }
